@@ -26,14 +26,14 @@ ServerSocket serverSocket;
 			//   Put steps 8 - 15 in the try block.
 		try {
 				//8. Let the user know that the server is waiting for a client to connect.
-		System.out.println("Waiting for user to connect..");
+		System.out.println("Waiting for client to connect..");
 				//9. Create an object of the Socket class and initialize it to serverSocket.accept();
 				//   Change serverSocket to match the ServerSocket member variable you created in step 1.
 				//   The program will wait her until either a client connects or the timeout expires.
 		Socket socket = serverSocket.accept();
 				//10. Let the user know that the client has connected.
 			System.out.println("Client has connected !");
-				serverSocket = new ServerSocket(8080);
+				//serverSocket = new ServerSocket(8080);
 				//11. Create a DataInputStream object. When initializing it, use the Socket object you created in step 9 to call the getInputStream() method.
 				DataInputStream dataInput = new DataInputStream(socket.getInputStream());
 				//12. Print the message from the DataInputStream object using the readUTF() method
@@ -45,6 +45,9 @@ ServerSocket serverSocket;
 				//15. Close the client server
 				socket.close();
 				
+		}catch(SocketTimeoutException e){
+			trueVar = false;
+			e.printStackTrace();
 		}catch(IOException e) {
 			//6. If the program catches a SockeTimeoutException, let the user know about it and set loop's boolean variable to false.
 			
