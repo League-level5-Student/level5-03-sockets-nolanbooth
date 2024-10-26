@@ -6,19 +6,26 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 public class ChatAppClient {
 	private String ip;
 	private int port;
+	private String message = "";
+	private JTextArea area;
+	
 
 	Socket connection;
 
 	ObjectOutputStream os;
 	ObjectInputStream is;
 
-	public ChatAppClient(String ip, int port) {
+	public ChatAppClient(String ip, int port, JTextArea area) {
 		this.ip = ip;
 		this.port = port;
+		this.area = area;
+		this.area.setEditable(false);
+	
 	}
 
 	public void start(){
@@ -39,8 +46,10 @@ public class ChatAppClient {
 		
 		while (connection.isConnected()) {
 			try {
-				JOptionPane.showMessageDialog(null, is.readObject());
-				System.out.println(is.readObject());
+				area.setText(area.getText() + "Server: " + is.readObject() + "\n");
+				//System.out.println(is.readObject());
+				
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,5 +69,10 @@ public class ChatAppClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}public String getMessage() {
+		
+		
+		
+		return message;
 	}
 }

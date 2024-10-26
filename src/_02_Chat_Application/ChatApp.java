@@ -14,9 +14,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 public class ChatApp {
 	private int port;
+	private JTextArea area;
 
 	private ServerSocket server;
 	private Socket connection;
@@ -24,8 +26,10 @@ public class ChatApp {
 	ObjectOutputStream os;
 	ObjectInputStream is;
 
-	public ChatApp(int port) {
+	public ChatApp(int port, JTextArea area) {
 		this.port = port;
+		this.area = area;
+		this.area.setEditable(false);
 	}
 
 	public void start(){
@@ -41,8 +45,10 @@ public class ChatApp {
 
 			while (connection.isConnected()) {
 				try {
-					JOptionPane.showMessageDialog(null, is.readObject());
-					System.out.println(is.readObject());
+					area.setText(area.getText() + "Client: " + is.readObject()+"\n");
+				//	System.out.println(is.readObject());
+					
+					
 				}catch(EOFException e) {
 					JOptionPane.showMessageDialog(null, "Connection Lost");
 					System.exit(0);

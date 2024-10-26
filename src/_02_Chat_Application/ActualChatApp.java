@@ -31,7 +31,7 @@ public class ActualChatApp extends JFrame {
 		if(response == JOptionPane.YES_OPTION){
 			
 			
-			chatApp = new ChatApp(8080);
+			chatApp = new ChatApp(8080, area);
 			setTitle("CHAT APP SERVER");
 			JOptionPane.showMessageDialog(null, "Server started at: " + chatApp.getIPAddress() + "\nPort: " + chatApp.getPort());
 			button.addActionListener((e)->{
@@ -57,12 +57,16 @@ public class ActualChatApp extends JFrame {
 			String ipStr = JOptionPane.showInputDialog("Enter the IP Address");
 			String prtStr = JOptionPane.showInputDialog("Enter the port number");
 			int port = Integer.parseInt(prtStr);
-			chatAppClient = new ChatAppClient(ipStr, port);
+			
+			chatAppClient = new ChatAppClient(ipStr, port, area);
+			
 			button.addActionListener((e)->{
 				String clientMessage = field.getText();
 				field.setText("");
 				chatAppClient.sendMessage(clientMessage);
 				area.setText(area.getText() + "Client: "+clientMessage+"\n");
+				
+				
 			});
 			add(panel);
 			panel.add(button);
